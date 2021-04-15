@@ -38,6 +38,11 @@ db.on('disconnected', ()=> console.log('Mongoose is disconnected...'))
 // controllers
 //app.use('/holidays', require('./controllers/holidaysController')) // not in use yet.
 
+app.get('/', (req, res)=>{
+    console.log("home")
+    res.send(`<h1>Working</h1>`)
+})
+
 app.listen(PORT, ()=>{
-	console.log(`Black Box server is running......port= ${PORT}`);
+	console.log(`Black Box server is running......port = ${PORT}`);
 })

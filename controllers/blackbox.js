@@ -3,49 +3,43 @@ const blackBox = express.Router();
 const blackBoxModel = require('../models/schema');
 
 
-// GET (index) list of
+// GET -- index
 blackBox.get('/', (req, res)=>{
-	// res.send('Get route is working!!!');
-	blackBoxModel.find({}, (error, boxuser)=>{
+	res.send('Get route is working')
+	blackBoxModel.find({}, (error, shoppingCart)=>{
 		if (error){
 			res.status(400).json(error)
 		}
 		else{
-			res.status(200).json(boxuser)
+			res.status(200).json(shoppingCart)
 		}
 	})
 
-});
-
+})
 
 // POST ROUTE
 blackBox.post('/', (req, res)=>{
-
-
-	blackBoxModel.create(req.body, (error, createHoliday)=>{
+	blackBoxModel.create(req.body, (error, createVacation)=>{
 		if (error){
 			res.status(400).json({error: error.message})
 		}
 		else{
-			res.status(201).json(createHoliday)
+			res.status(201).json(createVacation)
 		}
 	})
-
-});
-
+})
 
 // DELETE ROUTE
 blackBox.delete('/:id', (req, res)=>{
-
-	holidaysModel.findByIdAndDelete(req.params.id, (error, deletedHoliday)=>{
+	blackBoxModel.findByIdAndDelete(req.params.id, (error, deletedVacation)=>{
 		if (error){
 			res.status(400).json({error: error.message})
 		}
-		else if (deletedHoliday === null){
-			res.status(404).json({message: 'Holiday id not Found'})
+		else if (deletedVacation === null){
+			res.status(404).json({message: 'Vacation id not Found'})
 		}
 		else{
-			res.status(200).json({message: `Holiday ${deletedHoliday.name} deleted successfully`})
+			res.status(200).json({message: `Vacation ${deletedVacation.name} deleted successfully`})
 		}
 	})
 })
@@ -53,35 +47,36 @@ blackBox.delete('/:id', (req, res)=>{
 
 // UPDATE ROUTE
 blackBox.put('/:id', (req, res)=>{
-
-	holidaysModel.findByIdAndUpdate(req.params.id, req.body, {new:true}, (error, updatedHoliday)=>{
+	holidaysModel.findByIdAndUpdate(req.params.id, req.body, {new:true}, (error, updatedVacation)=>{
 		if (error){
 			res.status(400).json({error: error.message})
 		}
 		else{
 			res.status(200).json({
-				message: `Holiday ${updatedHoliday.id} updated successfully`,
-				data: updatedHoliday
+				message: `Vacation ${updatedVacation.id} updated successfully`,
+				data: updatedVacation
 			})
 		}
 	})
 })
 
-// PATCH ROUTE increments numbers of likes
+
+
+
+// PATCH ROUTE increments numbers of likes /// probably wont use this..... save for now.
 blackBox.patch('/addlikes/:id', (req, res)=>{
 
-	holidaysModel.findByIdAndUpdate(req.params.id, { $inc: { likes : 1} }, {new:true}, (error, updatedHoliday)=>{
+	blackBoxModel.findByIdAndUpdate(req.params.id, { $inc: { likes : 1} }, {new:true}, (error, updatedVacation)=>{
 		if (error){
 			res.status(400).json({error: error.message})
 		}
 		else{
 			res.status(200).json({
-				data: updatedHoliday
+				data: updatedVacation
 			})
 		}
 	})
 })
 
 
-
-module.exports = holidays;
+module.exports = blackBox
