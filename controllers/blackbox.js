@@ -1,11 +1,10 @@
-const express = require('express');
-const blackBox = express.Router();
-const blackBoxModel = require('../models/schema');
-
+const express = require('express')
+const blackBox = express.Router()
+const blackBoxModel = require('../models/schema')
 
 // GET -- index
 blackBox.get('/', (req, res)=>{
-	res.send('Get route is working')
+	console.log("get route working.")
 	blackBoxModel.find({}, (error, shoppingCart)=>{
 		if (error){
 			res.status(400).json(error)
@@ -19,6 +18,7 @@ blackBox.get('/', (req, res)=>{
 
 // POST ROUTE
 blackBox.post('/', (req, res)=>{
+	console.log("post route working")
 	blackBoxModel.create(req.body, (error, createVacation)=>{
 		if (error){
 			res.status(400).json({error: error.message})
@@ -31,6 +31,7 @@ blackBox.post('/', (req, res)=>{
 
 // DELETE ROUTE
 blackBox.delete('/:id', (req, res)=>{
+	console.log("delete route working")
 	blackBoxModel.findByIdAndDelete(req.params.id, (error, deletedVacation)=>{
 		if (error){
 			res.status(400).json({error: error.message})
@@ -44,10 +45,10 @@ blackBox.delete('/:id', (req, res)=>{
 	})
 })
 
-
 // UPDATE ROUTE
 blackBox.put('/:id', (req, res)=>{
-	holidaysModel.findByIdAndUpdate(req.params.id, req.body, {new:true}, (error, updatedVacation)=>{
+	console.log("update route working")
+	blackBoxModel.findByIdAndUpdate(req.params.id, req.body, {new:true}, (error, updatedVacation)=>{
 		if (error){
 			res.status(400).json({error: error.message})
 		}
@@ -59,9 +60,6 @@ blackBox.put('/:id', (req, res)=>{
 		}
 	})
 })
-
-
-
 
 // PATCH ROUTE increments numbers of likes /// probably wont use this..... save for now.
 blackBox.patch('/addlikes/:id', (req, res)=>{
@@ -77,6 +75,5 @@ blackBox.patch('/addlikes/:id', (req, res)=>{
 		}
 	})
 })
-
 
 module.exports = blackBox

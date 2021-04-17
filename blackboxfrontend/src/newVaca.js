@@ -4,7 +4,7 @@ import './App.css'
 import React, { Component } from 'react'
 
 
-class VacationForm extends Component {
+export default class VacationForm extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -20,26 +20,40 @@ class VacationForm extends Component {
         this.setState({
             [event.target.name]: event.target.value
         })
-        // console.log(this.state.name + "--name")
-        // console.log(this.state.name + "--location")
-        // console.log(this.state.name + "--Date From")
-        // console.log(this.state.name + "--Fate to")
     }
 
+    // handles form submitting, this should add the vacation info to the db...
     handleSubmit = (event) => {
         event.preventDefault()
-        console.log('handeling Submit')
-    }
+        console.log(this.props.baseURL + '/blackbox');
+        // console.log(this.state.name)
+        // console.log(this.state.location)
+        // console.log(this.state.dateFrom)
+        // console.log(this.state.dateTo)
 
-    handleClick = (e) => {
-        e.preventDefault()
-        console.log(this.state.name + "--name")
-        console.log(this.state.location + "--location")
-        console.log(this.state.dateFrom + "--Date From")
-        console.log(this.state.dateTo + "--date to")
-    }
-
-
+        fetch(this.props.baseURL + '/blackbox', {
+            method: 'POST',
+            body: JSON.stringify({
+                name: this.state.name,
+                location: this.state.location,
+                dateFrom: this.state.dateFrom,
+                dateTo: this.state.dateTo
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then( res => {
+          return res.json()
+        }).then(data => {
+              this.props.addVacation(data)
+              this.setState({
+                name: '',
+                location: '',
+                dateFrom: '',
+                dateTo: '',
+              })
+            }).catch (error => console.error({'Error': error}))
+        }
 
     render() {
         return(
@@ -49,22 +63,18 @@ class VacationForm extends Component {
             <h1>from newVaca.js</h1>
 
                 <label>Name:</label>
-                <input name="name" onChange={this.handleChange} ></input><br></br>
+                <input name="name" id="name" onChange={(evt)=> this.handleChange(evt)} ></input><br></br>
 
                 <label>location:</label>
-                <input name="location" onChange={this.handleChange} ></input><br></br>
+                <input name="location" id="location" onChange={(evt)=> this.handleChange(evt)} ></input><br></br>
 
                 <label>Date From:</label>
-                <input name="dateFrom" onChange={this.handleChange} ></input><br></br>
+                <input name="dateFrom"id="dateFrom"  onChange={(evt)=> this.handleChange(evt)} ></input><br></br>
 
                 <label>Date To:</label>
-                <input name="dateTo" onChange={this.handleChange} ></input><br></br>
+                <input name="dateTo" id="dateTo" onChange={(evt)=> this.handleChange(evt)} ></input><br></br>
 
-
-
-
-
-                <input type="submit" value="Visit" onClick={this.handleClick}></input>
+                <input type="submit" value="Visit"></input>
 
             </form>
 
@@ -72,6 +82,3 @@ class VacationForm extends Component {
         )
     }
 }
-
-
-export default VacationForm
