@@ -59,8 +59,8 @@ export default class VacationForm extends Component {
         return(
             <div>
 
-            <form onSubmit={this.handleSubmit}>
-            <h1>from newVaca.js</h1>
+            <form onSubmit={this.handleSubmit} className="addNewVacationForm">
+            <h1>This form adds a vacation.</h1>
 
                 <label>Name:</label>
                 <input name="name" id="name" onChange={(evt)=> this.handleChange(evt)} ></input><br></br>

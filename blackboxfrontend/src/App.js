@@ -3,6 +3,11 @@ import React, { Component } from 'react'
 import Nav from './nav'
 import VacationForm from './newVaca'
 
+//import RichardsFile from './richardsfile'
+
+//import Marcus'File from './marcusfile'
+
+
 //console.log(process.env.NODE_ENV)
 let baseURL = ''
 
@@ -119,7 +124,7 @@ class App extends Component {
 
     showEdit = (vacation) => {
         console.log("edit clicked")
-        console.log(vacation)
+        //console.log(vacation)
         this.setState({
             showModal: true,
             name: vacation.name,
@@ -129,10 +134,6 @@ class App extends Component {
             editVaca: vacation,
         })
     }
-
-
-
-
     componentDidMount() {
         this.getVacations()
     }
@@ -142,42 +143,36 @@ class App extends Component {
         return (
             <div className="App">
 
-                <h1>Black Box app</h1>
+                { this.state.allVaca.length > 0 && <Nav thisIsAProp={this.state.allVaca[3]}/> }
 
-                <Nav />
+                <VacationForm  baseURL={ baseURL } addVacation={ this.addVaca } />
 
-                <p>These are the vacations to use.</p>
-            <VacationForm  baseURL={ baseURL } addVacation={ this.addVaca } />
+            <div>This table displays all Vacations:
 
+            <table className="vacationTable">
+              <tbody>
+                {this.state.allVaca.map(vaca => {
+                    return (
+                        <tr key={vaca._id}>
+                            <td>{vaca.name}</td>
+                            <td>{vaca.location}</td>
+                            <td>{vaca.dateFrom}</td>
+                            <td>{vaca.dateTo}</td>
+                            <td onClick={ ()=> this.deleteVaca(vaca._id) }>~~Delete~~</td>
+                            <td onClick={ ()=> this.showEdit(vaca)}>Edit:</td>
+                        </tr>
+                    )
+                })
 
-        <div>all Vacations:
+                }
+              </tbody>
+            </table><br/>
 
-            <table>
-            <tbody>
-
-            {this.state.allVaca.map(vaca => {
-                return (
-                    <tr key={vaca._id}>
-                        <td>{vaca.name}</td>
-                        <td>{vaca.location}</td>
-                        <td>{vaca.dateFrom}</td>
-                        <td>{vaca.dateTo}</td>
-                        <td onClick={ ()=> this.deleteVaca(vaca._id) }>~~Delete~~</td>
-                        <td onClick={()=> this.showEdit(vaca)}>Edit:</td>
-                    </tr>
-                )
-            })
-
-            }
-            </tbody>
-        </table>
-            <br/>
-            <br/>
-            <br/>
             {this.state.showModal &&
 
-                <form onSubmit={this.handleSubmit}>
-                <h1>Edit:</h1>
+                <form onSubmit={this.handleSubmit} className="editForm">
+                    <h1>This form edits vaacation</h1>
+                    <h1>Edit:</h1>
 
                     <label>Name:</label>
                     <input name="name"  value={this.state.name} onChange={this.handleChange} ></input><br></br>
@@ -192,11 +187,17 @@ class App extends Component {
                     <input name="dateTo" value={this.state.dateTo} onChange={this.handleChange} ></input><br></br>
 
                     <input type="submit" value="Update"></input>
-
                 </form>
             }
-
         </div>
+
+        <div className="hotelsDiv">Hotels</div>
+
+        <div className="WeatherDiv">Weather</div>
+
+        <div className="ticketDiv">Maybe Ticket Price</div>
+
+
         </div>
         )
     }
