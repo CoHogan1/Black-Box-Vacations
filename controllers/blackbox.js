@@ -10,6 +10,7 @@ blackBox.get('/', (req, res)=>{
 			res.status(400).json(error)
 		}
 		else{
+			console.log("status 200 find Database")
 			res.status(200).json(shoppingCart)
 		}
 	})
@@ -24,6 +25,7 @@ blackBox.post('/', (req, res)=>{
 			res.status(400).json({error: error.message})
 		}
 		else{
+			console.log("status 201 created vacation")
 			res.status(201).json(createVacation)
 		}
 	})
@@ -34,12 +36,15 @@ blackBox.delete('/:id', (req, res)=>{
 	console.log("delete route working")
 	blackBoxModel.findByIdAndDelete(req.params.id, (error, deletedVacation)=>{
 		if (error){
+			console.log("Error 400")
 			res.status(400).json({error: error.message})
 		}
 		else if (deletedVacation === null){
+			console.log("Vacation not found")
 			res.status(404).json({message: 'Vacation id not Found'})
 		}
 		else{
+			console.log(" Deleting proper vacation")
 			res.status(200).json({message: `Vacation ${deletedVacation.name} deleted successfully`})
 		}
 	})
@@ -53,6 +58,7 @@ blackBox.put('/:id', (req, res)=>{
 			res.status(400).json({error: error.message})
 		}
 		else{
+			console.log("Status 200 updated vacation.")
 			res.status(200).json({
 				message: `Vacation ${updatedVacation.id} updated successfully`,
 				data: updatedVacation

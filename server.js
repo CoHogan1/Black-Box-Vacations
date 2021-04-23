@@ -1,15 +1,18 @@
 // black box back end - api
 const express = require('express')
+require('dotenv').config()
 const app = express()
-const PORT = 3003
+const PORT = process.env.PORT
 const mongoose = require('mongoose')
-const cors = require('cors') 
+const cors = require('cors')
 
 // middle ware
 app.use(express.json())
 
+const mongoURI = process.env.MONGODBURI
+
 // mongoose
-mongoose.connect('mongodb://localhost:27017/blackboxDB',{ // blackboxDB is DB name
+mongoose.connect(mongoURI ,{ // blackboxDB is DB name
 	useNewUrlParser:true,
 	useUnifiedTopology: true,
 	useFindAndModify: false
