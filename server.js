@@ -28,6 +28,7 @@ const whitelist = ['http://localhost:3000',backEnd,"https://bbvacationsbackend.h
 const corsOptions = {
 	origin: (origin, callback) => {
 		if (whitelist.indexOf(origin) !== -1 || !origin) {
+			console.log(origin)
 			callback(null, true)
 		} else {
 			console.log(whitelist)
