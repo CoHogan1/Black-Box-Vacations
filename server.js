@@ -12,7 +12,7 @@ app.use(express.json())
 const mongoURI = process.env.MONGODBURI
 
 const heroku = "https://blackbfrontend.herokuapp.com"
-const backEnd = "https://bbvacationsbackend.herokuapp.com/"
+const backEnd = "https://bbvacationsbackend.herokuapp.com"
 
 
 
