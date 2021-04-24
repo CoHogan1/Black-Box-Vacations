@@ -23,7 +23,7 @@ mongoose.connect(mongoURI ,{ // blackboxDB is DB name
 });
 
 // Setup Cors middleware // may not need this. Just here in case.
-const whitelist = ['http://localhost:3000','http://localhost:3003',process.env.BASEURL,heroku]
+const whitelist = ['http://localhost:3000','http://localhost:3003',process.env.BASEURL,heroku,"https://blackbfrontend.herokuapp.com"]
 const corsOptions = {
 	origin: (origin, callback) => {
 		if (whitelist.indexOf(origin) !== -1 || !origin) {
