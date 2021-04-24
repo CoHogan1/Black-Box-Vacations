@@ -11,6 +11,8 @@ app.use(express.json())
 
 const mongoURI = process.env.MONGODBURI
 
+const heroku = "https://blackbfrontend.herokuapp.com"
+
 
 
 // mongoose
@@ -21,12 +23,13 @@ mongoose.connect(mongoURI ,{ // blackboxDB is DB name
 });
 
 // Setup Cors middleware // may not need this. Just here in case.
-const whitelist = ['http://localhost:3000','http://localhost:3003',process.env.BASEURL]
+const whitelist = ['http://localhost:3000','http://localhost:3003',process.env.BASEURL,heroku]
 const corsOptions = {
 	origin: (origin, callback) => {
 		if (whitelist.indexOf(origin) !== -1 || !origin) {
 			callback(null, true)
 		} else {
+			console.log(whitelist)
 			callback(new Error('Not allowed by CORS'))
 		}
 	}
@@ -44,5 +47,6 @@ db.on('disconnected', ()=> console.log('Mongoose is disconnected...'))
 app.use('/blackbox', require('./controllers/blackbox'))
 
 app.listen(PORT, ()=>{
-	console.log(`Black Box server is running......port = ${PORT}`);
+	console.log(`Black Box server is running......port = ${PORT}`)
+	console.log(whitelist)
 })
