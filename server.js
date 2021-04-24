@@ -48,5 +48,5 @@ app.use('/blackbox', require('./controllers/blackbox'))
 
 app.listen(PORT, ()=>{
 	console.log(`Black Box server is running......port = ${PORT}`)
-	console.log(whitelist)
+	console.log(whitelist + " list")
 })
